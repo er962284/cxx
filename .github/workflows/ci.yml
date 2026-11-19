@@ -27,3 +27,25 @@ jobs:
 
       - name: Run tests
         run: ctest --test-dir build --output-on-failure
+
+  version:
+    needs: build-and-test
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Install git-cliff
+        uses: taiki-e/install-action@v2
+        with:
+          tool: git-cliff
+
+      - name: Calculate next version
+        run: |
+          VERSION=$(git-cliff --bumped-version)
+          echo "Next version: $VERSION"
+
+
