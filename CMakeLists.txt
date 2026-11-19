@@ -9,9 +9,14 @@ if(NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
     set(CMAKE_BUILD_TYPE Debug CACHE STRING "Debug" FORCE)
 endif()
 
+add_library(lru_cache STATIC src/lru_cache.cpp)
+
 include_directories(include)
 
 add_executable(interview src/main.cpp)
+
+target_link_libraries(interview PRIVATE lru_cache)
+
 target_compile_options(interview PRIVATE -Wall -Wextra)
 
 enable_testing()
